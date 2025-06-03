@@ -24,6 +24,9 @@ export default function BirdAvatar({ onWin, onResetDone }) {
   const lastAngle = useRef({ left: 0, right: 0 });
   const lastRaised = useRef(false);
 
+  // Define of successful actions to win
+  const WIN_THRESHOLD = 3;
+
   // State to manage score and win condition
   const [score, setScore] = useState(0);
   const [won, setWon] = useState(false);
@@ -87,12 +90,12 @@ export default function BirdAvatar({ onWin, onResetDone }) {
     updateWingState('left', leftWrist, leftShoulder);
     updateWingState('right', rightWrist, rightShoulder);
 
-    // Check if both wings are raised and update score
+    // WIN LOGIC: Check if both wings are raised and update score 
     const bothRaised = wingState.current.left === 'raised' && wingState.current.right === 'raised';
     if (bothRaised && !lastRaised.current && !won) {
       setScore((prev) => {
         const newScore = prev + 1;
-        if (newScore >= 3) {
+        if (newScore >= WIN_THRESHOLD) {
           setWon(true);
           setTimeout(() => onWin?.(), 0);
         }
@@ -157,7 +160,12 @@ export default function BirdAvatar({ onWin, onResetDone }) {
 
   return (
     <div style={{ position: 'absolute', bottom: '20%', left: '5%', width: 640, height: 480 }}>
-      <Instruction icon1={iconDown} icon2={iconUp} interval={1000} score={score} />
+      <Instruction 
+        icon1={iconDown} 
+        icon2={iconUp} 
+        interval={1000} 
+        score={score} 
+        countdownStart={WIN_THRESHOLD}/>
       <video ref={videoRef} width="640" height="480" style={{ display: 'none' }} />
       <canvas ref={canvasRef} width={640} height={480} style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }} />
 
