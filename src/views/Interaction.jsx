@@ -7,6 +7,8 @@ import Title from '../components/Title.jsx';
 import BirdAvatar from '../components/BirdAvatar.jsx';
 import BirdFemale from '../components/BirdFemale.jsx';
 
+import birdFemaleImage from '../assets/images/female_birds/female_bird.png'
+
 import styles from '../modules/Interaction.module.css';
 
 function Interaction() {
@@ -35,6 +37,7 @@ function Interaction() {
 
       {/* Female bird that reacts when the player wins, then resets on trigger */}
       <BirdFemale 
+        image={birdFemaleImage}
         isAttracted={won} 
         resetTrigger={resetTrigger} />
     </div>

@@ -6,7 +6,7 @@ import wingLeft from './bird/bird-left-wing.png';
 import wingRight from './bird/bird-right-wing.png';
 
 // Female bird
-import femaleBird from './bird/female_bird.png';
+import femaleBird from './images/female_birds/female_bird.png';
 
 // Video
 import winVid from './videos/Bird6.mp4';
