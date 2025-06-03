@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import femaleBird from '../assets/bird/female_bird.png';
 
-export default function BirdFemale({ isAttracted, resetTrigger }) {
+export default function BirdFemale({ isAttracted, resetTrigger, image }) {
   // Inline style controls female bird's position and size
   const [style, setStyle] = useState({
     top: '50%',
@@ -60,7 +59,7 @@ export default function BirdFemale({ isAttracted, resetTrigger }) {
   // Render the bird
   return (
     <img
-      src={femaleBird}
+      src={image}
       alt="Female Bird"
       style={{
         position: 'absolute',
