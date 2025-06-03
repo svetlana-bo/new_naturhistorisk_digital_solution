@@ -157,7 +157,7 @@ export default function BirdAvatar({ onWin, onResetDone }) {
 
   return (
     <div style={{ position: 'absolute', bottom: '20%', left: '5%', width: 640, height: 480 }}>
-      <Instruction icon1={iconDown} icon2={iconUp} interval={800} />
+      <Instruction icon1={iconDown} icon2={iconUp} interval={1000} score={score} />
       <video ref={videoRef} width="640" height="480" style={{ display: 'none' }} />
       <canvas ref={canvasRef} width={640} height={480} style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }} />
 
