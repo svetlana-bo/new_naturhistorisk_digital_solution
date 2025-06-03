@@ -1,0 +1,24 @@
+.main_container {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+.h1_error {
+    font-size: 6.25rem;
+    font-family: CarlMarx;
+    color: var(--color-text);
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.h2_error {
+    font-size: 2s.5rem;
+    font-family: CarlMarx;
+    color: var(--color-text);
+    text-align: center;
+}

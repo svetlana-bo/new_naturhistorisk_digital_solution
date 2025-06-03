@@ -1,0 +1,43 @@
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+ 
+
+/* define color system for the solution*/ 
+  --nh-pink: #AA005C;
+  --nh-green: #4C5E22;
+  --nh-green-light: #D7E1C2;
+  --nh-black: #0A0A0A;
+  --nh-white: #FEFEFE;
+  --nh-green-body: #2C3714;
+  --nh-gray: #EAEAEA;
+}
+
+/* Importing the AU Passata font */
+@font-face {
+  font-family: 'AU Passata';
+  src: url('/fonts/AUPassata_Rg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body {
+  font-family: 'AU Passata', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: url('../public/background.png') no-repeat center center fixed;
+  background-size: cover;
+  min-width: 320px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+ 
+}
+
+
+

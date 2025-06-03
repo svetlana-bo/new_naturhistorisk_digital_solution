@@ -1,0 +1,16 @@
+.loader {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background: transparent;
+    font-size: 3rem;
+    font-family: CarlMarx;
+    color: var(--nh-green-body);
+  }
+
+  .gif {
+    width: 50% ;
+    margin-bottom: 1rem;
+  }

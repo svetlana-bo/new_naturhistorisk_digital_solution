@@ -1,0 +1,147 @@
+p {
+    margin: 0;
+    padding: 0;
+  }
+
+hr {
+    width: 88%;
+    border: 1.5px solid var(--nh-pink);
+    margin: 0 0 1rem 0;
+    align-self: center;
+}
+
+h1 {
+    color: var(--nh-green);
+    font-family: Coquette;
+    font-size: 3.27rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.734px;
+    padding-top: 7.6rem;
+    margin: 0;
+}
+
+h2 {
+    color:  var(--nh-pink);
+    font-family: CarlMarx;
+    font-size: 2.42rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 1.086px;
+    margin: 0;
+}
+
+body {color: var(--nh-green-body);
+    font-family: 'AU Passata', Arial, san-serif;
+    font-size: 1em;
+    font-style: normal;
+    line-height: 150%; /* 36px */
+    letter-spacing: -0.456px;}
+
+
+.main_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    
+}
+
+.content_container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0rem; /*  space between cards */
+    justify-content: center; 
+    text-align: left;
+
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.text_box {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    text-align: left;
+    padding: 0rem  1rem 0 1rem; /* top right bottom left */
+    text-align: left;
+}
+
+.text_box_wave {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    text-align: left;
+    padding: 1rem 1rem 0 1rem; /* top right bottom left */
+    text-align: left;
+    max-width: 30ch;
+    margin: 0;  
+}
+
+.intro_bird {
+    height: auto;
+    width: auto;
+    vertical-align: middle;
+    margin-top: -2rem;
+    clip-path: inset(3.5rem 0.9rem 5rem 0.8rem); /* top right bottom left */
+}
+
+.text_box_lang {display: flex;
+    flex-direction: row;
+    align-items: top;
+    gap: 0rem; /*  space between cards */
+    padding: 2rem 0 2rem 0;
+    justify-content: center; 
+    text-align: left;
+    max-width: 60ch;
+  
+}
+
+h3 {
+    text-align: left;
+    font-family: CarlMarx;
+    font-size: 1.5em;
+    margin-bottom: 0em;
+    letter-spacing: 0.06em;
+}
+
+.icon {
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    margin-top: 0.25rem;
+    margin-right: 0.5em; /* space between icon and text */
+}
+
+.waving_icon {
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    animation: wave 3s infinite;
+    transform-origin: 70% 70%; /* makes it rotate like a hand wave */
+
+}
+
+
+
+
+
+
+/* Animation for the waving icon */
+    @keyframes wave {
+        0% { transform: rotate(0deg); }
+        15% { transform: rotate(14deg); }
+        30% { transform: rotate(-8deg); }
+        45% { transform: rotate(14deg); }
+        60% { transform: rotate(-4deg); }
+        75% { transform: rotate(10deg); }
+        100% { transform: rotate(0deg); }
+      }
