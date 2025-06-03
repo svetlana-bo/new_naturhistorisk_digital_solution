@@ -4,13 +4,13 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from '../modules/Instruction.module.css';
 
-export default function Instruction({ icon1, icon2, interval = 1000, score }) {
+export default function Instruction({ icon1, icon2, interval = 1000, score, countdownStart = 3  }) {
   // Toggle state for alternating icons
   const [showFirst, setShowFirst] = useState(true);
 
   // State for showing countdown overlay
   const [showCountdown, setShowCountdown] = useState(false);
-  const [countdownValue, setCountdownValue] = useState(3);
+  const [countdownValue, setCountdownValue] = useState(countdownStart);
 
   // Ref to store the previous score to detect changes
   const prevScoreRef = useRef(score);
@@ -21,16 +21,16 @@ export default function Instruction({ icon1, icon2, interval = 1000, score }) {
     return () => clearInterval(id); // Cleanup on unmount
   }, [interval]);
 
-  // Show countdown overlay when score increases (but is still < 3)
+  // Show countdown overlay when score increases within the limit for the "win"
   useEffect(() => {
     // Only react if score is different from the previous one
     if (
       score >= 0 &&
-      score <= 3 &&
+      score <= countdownStart &&
       score !== prevScoreRef.current
     ) {
-      // Set countdown value to show (reverse logic: 3 - current score)
-      setCountdownValue(3 - score);
+      // Set countdown value to show (reverse logic: countdownStart - current score)
+      setCountdownValue(countdownStart - score);
       setShowCountdown(true); // Trigger overlay
 
       // Hide overlay after 3 seconds
@@ -41,7 +41,7 @@ export default function Instruction({ icon1, icon2, interval = 1000, score }) {
 
       return () => clearTimeout(timer); // Clean up timer
     }
-  }, [score]);
+  }, [score, countdownStart]);
 
   // Choose which icon to show based on toggle state
   const currentIcon = showFirst ? icon1 : icon2;
