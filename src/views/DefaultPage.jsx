@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 import styles from '../modules/DefaultPage.module.css';
 import wave from '../assets/icons/wave.svg';
-import Interaction from './Interaction';
+import Interaction from './Interaction6';
 import LoadingScreen from '../components/LoadingScreen'; 
 import dkIcon from '../assets/icons/dk.svg';
 import enIcon from '../assets/icons/en.svg';

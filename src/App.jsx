@@ -7,7 +7,7 @@ import Interaction2 from './views/Interaction2.jsx';
 import Interaction3 from './views/Interaction3.jsx';
 import Interaction4 from './views/Interaction4.jsx';
 import Interaction5 from './views/Interaction5.jsx';
-import Interaction6 from './views/Interaction.jsx';
+import Interaction6 from './views/Interaction6.jsx';
 import NotFound from './views/NotFound.jsx';
 
 const router = createBrowserRouter([
