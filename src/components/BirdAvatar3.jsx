@@ -1,58 +1,31 @@
-// BirdAvatar: A component that renders an animated bird reacting to player arm movements
 import styles from '../modules/BirdAvatar.module.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { usePoseTracker } from '../hooks/usePoseTracker';
 
 import WinOverlay from './WinOverlay';
-import winVideo from '../assets/videos/Bird6.mp4'; 
+import winVideo from '../assets/videos/Bird3.mp4'; 
 
 import iconOut from '../assets/icons/Instruction3-out.svg';
 import iconIn from '../assets/icons/Instruction3-in.svg';
 import Instruction from './Instruction';
 
-import leftWing from '../assets/bird/bird-left-wing.png';
-import rightWing from '../assets/bird/bird-right-wing.png';
-import body from '../assets/bird/bird-body.png';
+import body from '../assets/bird/bird3-body.png';
+import collar from '../assets/bird/bird3-collar.png';
 
 export default function BirdAvatar({ onWin, onResetDone }) {
-
-  // Custom hook to track pose data and manage video/canvas references
   const { videoRef, canvasRef, poseData } = usePoseTracker();
 
-  // Wing animation states (ref to avoid triggering rerenders)
-  const wingState = useRef({ left: 'idle', right: 'idle' });
-  const lastAngle = useRef({ left: 0, right: 0 });
-  const lastRaised = useRef(false);
-
-  // Define of successful actions to win
+  const lastHandsAtChest = useRef(false);
   const WIN_THRESHOLD = 3;
-
-  // State to manage score and win condition
   const [score, setScore] = useState(0);
   const [won, setWon] = useState(false);
+  const [debugInfo, setDebugInfo] = useState({ handsAtChest: false, leftWrist: {}, rightWrist: {}, leftShoulder: {}, rightShoulder: {} });
+  const [collarVisible, setCollarVisible] = useState(false);
 
-  //Utility functions for angle calculations and clamping
-  const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-
-  // Smooth angle calculation to avoid jittery movements
-  const smoothAngle = (side, newAngle) => {
-    const smoothed = 0.8 * lastAngle.current[side] + 0.2 * newAngle;
-    lastAngle.current[side] = smoothed;
-    return smoothed;
-  };
-
-  // Calculate angle between two body keypoints
-  const getAngle = (a, b) => {
-    if (!a || !b || isNaN(a.x) || isNaN(a.y) || isNaN(b.x) || isNaN(b.y)) return 0;
-    return Math.atan2(b.y - a.y, b.x - a.x) * (180 / Math.PI);
-  };
-
-  //Main animation and win logic
   useEffect(() => {
     if (!poseData || !canvasRef.current) return;
 
-    // Get keypoints for shoulders and wrists
-    const key = (name) => poseData.keypoints.find((k) => k.name === name);
+    const key = (name) => poseData.keypoints.find((k) => k.name === name || k.part === name);
     const leftShoulder = key('left_shoulder');
     const rightShoulder = key('right_shoulder');
     const leftWrist = key('left_wrist');
@@ -65,34 +38,34 @@ export default function BirdAvatar({ onWin, onResetDone }) {
     const centerY = canvasHeight / 2;
     const verticalOffset = centerY - bodyPoseY;
 
-    // Get references to the wing and body elements
-    const leftWingEl = document.getElementById('leftWing');
-    const rightWingEl = document.getElementById('rightWing');
     const bodyImg = document.getElementById('birdBody');
+    const collarEl = document.getElementById('birdCollar');
 
-    // Update wing states based on wrist and shoulder positions (idle / raising / raised / lowering)
-    const updateWingState = (side, wrist, shoulder) => {
-      const state = wingState.current[side];
-      if (!wrist || !shoulder || wrist.score < 0.3) {
-        wingState.current[side] = 'idle';
-        return;
-      }
-      const isAbove = wrist.y < shoulder.y;
-      switch (state) {
-        case 'idle': wingState.current[side] = isAbove ? 'raising' : 'idle'; break;
-        case 'raising': wingState.current[side] = isAbove ? 'raised' : 'lowering'; break;
-        case 'raised': wingState.current[side] = isAbove ? 'raised' : 'lowering'; break;
-        case 'lowering': wingState.current[side] = isAbove ? 'raising' : 'idle'; break;
-      }
+    // Check if both wrists are close to the chest (center between shoulders)
+    const areHandsAtChest = () => {
+      if (!leftWrist || !rightWrist || !leftShoulder || !rightShoulder) return false;
+
+      const chestY = (leftShoulder.y + rightShoulder.y) / 2;
+      const chestX = (leftShoulder.x + rightShoulder.x) / 2;
+      const chestZone = 100; // px radius around chest center
+
+      const isLeftNearChest = Math.abs(leftWrist.x - chestX) < chestZone && Math.abs(leftWrist.y - chestY) < chestZone;
+      const isRightNearChest = Math.abs(rightWrist.x - chestX) < chestZone && Math.abs(rightWrist.y - chestY) < chestZone;
+
+      return isLeftNearChest && isRightNearChest;
     };
 
-    // Update the wing states based on current pose data
-    updateWingState('left', leftWrist, leftShoulder);
-    updateWingState('right', rightWrist, rightShoulder);
+    const handsAtChest = areHandsAtChest();
 
-    // WIN LOGIC: Check if both wings are raised and update score 
-    const bothRaised = wingState.current.left === 'raised' && wingState.current.right === 'raised';
-    if (bothRaised && !lastRaised.current && !won) {
+    // Temporarily show collar for 800ms if gesture is detected
+    if (handsAtChest && !collarVisible) {
+      setCollarVisible(true);
+      setTimeout(() => setCollarVisible(false), 800);
+    }
+
+    // Increase score only when handsAtChest transitions from false to true
+    if (handsAtChest && !lastHandsAtChest.current && !won) {
+      console.log('Hands at chest detected');
       setScore((prev) => {
         const newScore = prev + 1;
         if (newScore >= WIN_THRESHOLD) {
@@ -102,73 +75,48 @@ export default function BirdAvatar({ onWin, onResetDone }) {
         return newScore;
       });
     }
-    lastRaised.current = bothRaised;
+    lastHandsAtChest.current = handsAtChest;
 
-    // Vertical offset adjustments for wing animation
-    const getWingOffset = (side) => {
-      switch (wingState.current[side]) {
-        case 'raising':
-        case 'raised': return 0;
-        case 'lowering': return -10;
-        default: return 0;
-      }
-    };
-
-    // Update left wing position and rotation
-    if (leftWingEl && leftShoulder) {
-      const leftWingX = mirrorX(leftShoulder.x - 50);
-      leftWingEl.style.left = `${leftWingX}px`;
-      leftWingEl.style.top = `${leftShoulder.y + verticalOffset + 120 + getWingOffset('left')}px`;
-      if (leftWrist?.score > 0.5) {
-        const rawAngle = getAngle(leftShoulder, leftWrist);
-        const angle = clamp(rawAngle, -90, 90);
-        const smoothed = smoothAngle('left', -angle);
-        leftWingEl.style.transform = `translate(-50%, -30%) rotate(${smoothed}deg)`;
-      } else {
-        leftWingEl.style.transform = `translate(-50%, -30%)`;
-      }
-    }
-
-    // Update right wing position and rotation
-    if (rightWingEl && rightShoulder) {
-      const rightWingX = mirrorX(rightShoulder.x - 30);
-      rightWingEl.style.left = `${rightWingX}px`;
-      rightWingEl.style.top = `${rightShoulder.y + verticalOffset + 120 + getWingOffset('right')}px`;
-      if (rightWrist?.score > 0.5) {
-        const angle = clamp(getAngle(rightShoulder, rightWrist), -90, 90);
-        const smoothed = smoothAngle('right', angle);
-        rightWingEl.style.transform = `translate(-50%, -30%) rotate(${smoothed}deg)`;
-      } else {
-        rightWingEl.style.transform = `translate(-50%, -30%)`;
-      }
-    }
-
-  // Position the bird body centered between the shoulders of the user
+    // Position the bird body between shoulders
     if (bodyImg && leftShoulder && rightShoulder) {
-      const leftWingX = mirrorX(leftShoulder.x + 50);
-      const rightWingX = mirrorX(rightShoulder.x - 110);
-      const centerX = (leftWingX + rightWingX) / 2;
+      const leftX = mirrorX(leftShoulder.x);
+      const rightX = mirrorX(rightShoulder.x);
+      const centerX = (leftX + rightX) / 2;
       const topY = centerY;
       if (bodyImg.complete) {
         bodyImg.style.left = `${centerX - bodyImg.offsetWidth / 2}px`;
         bodyImg.style.top = `${topY}px`;
       }
     }
-  }, [poseData, won]);
 
- 
+    // Position the collar on neck
+    if (collarEl && leftShoulder && rightShoulder) {
+      const leftX = mirrorX(leftShoulder.x);
+      const rightX = mirrorX(rightShoulder.x);
+      const centerX = (leftX + rightX) / 2 + 65;
+      const topY = centerY + 60;
+      if (collarEl.complete) {
+        collarEl.style.left = `${centerX - collarEl.offsetWidth / 2}px`;
+        collarEl.style.top = `${topY}px`;
+      }
+    }
+  }, [poseData, won, collarVisible]);
 
   return (
     <div style={{ position: 'absolute', bottom: '20%', left: '5%', width: 640, height: 480 }}>
+      {/* Instruction prompts */}
       <Instruction 
         icon1={iconOut} 
         icon2={iconIn} 
         interval={1000} 
         score={score} 
-        countdownStart={WIN_THRESHOLD}/>
+        countdownStart={WIN_THRESHOLD} />
+
+      {/* Hidden video & canvas used for pose tracking */}
       <video ref={videoRef} width="640" height="480" style={{ display: 'none' }} />
       <canvas ref={canvasRef} width={640} height={480} style={{ position: 'absolute', top: 0, left: 0, zIndex: 0 }} />
 
+      {/* Render bird */}
       <div id="birdContainer" className={styles.bird_container}>
         <img id="birdBody" src={body} alt="Bird body" style={{
           position: 'absolute',
@@ -177,29 +125,25 @@ export default function BirdAvatar({ onWin, onResetDone }) {
           zIndex: 1,
           transition: 'top 0.1s ease-out, left 0.1s ease-out, transform 0.1s ease-out',
         }} />
-        <img id="leftWing" src={leftWing} alt="Left wing" style={{
+         
+        <img id="birdCollar" src={collar} alt="Bird collar" style={{
           position: 'absolute',
-          width: '25%',
-          transformOrigin: '80% 20%',
-          zIndex: 1,
-          transition: 'transform 0.2s ease-out',
-        }} />
-        <img id="rightWing" src={rightWing} alt="Right wing" style={{
-          position: 'absolute',
-          transformOrigin: '20% 20%',
-          width: '25%',
-          zIndex: 1,
-          transition: 'transform 0.2s ease-out',
+          width: '10%',
+          transformOrigin: 'center',
+          zIndex: 2,
+          opacity: collarVisible ? 1 : 0,
+          transition: 'opacity 0.3s ease, top 0.1s ease-out, left 0.1s ease-out'
         }} />
       </div>
 
+      {/* Win screen overlay */}
       {won && (
         <WinOverlay
           videoScr={winVideo}
           onReset={() => {
             setScore(0);
             setWon(false);
-            onResetDone?.();// defers the parent trigger
+            onResetDone?.();
           }}
         />
       )}

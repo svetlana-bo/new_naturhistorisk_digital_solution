@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 
 import Title from '../components/Title.jsx';
-import BirdAvatar from '../components/BirdAvatar.jsx';
+import BirdAvatar from '../components/BirdAvatar3.jsx';
 import BirdFemale from '../components/BirdFemale.jsx';
 
 import birdFemaleImage from '../assets/images/female_birds/female_bird3.png'
