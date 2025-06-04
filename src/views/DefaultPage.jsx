@@ -4,6 +4,9 @@
 import { useEffect, useState } from 'react';
 import { preloadAssets } from '../utils/preloadAssets';
 import { allInteractionAssets } from '../assets/interactionAssets';
+
+import { Link } from 'react-router-dom';
+
 import styles from '../modules/DefaultPage.module.css';
 import wave from '../assets/icons/wave.svg';
 import Interaction from './Interaction';
@@ -119,6 +122,17 @@ export default function DefaultPage() {
           <img src={bird2} alt="Image of bird" className={styles.intro_bird}/>
         </div>
       </div>
+
+      <div style={{ marginTop: '-10rem' }}>
+      <ul>
+  <li><Link to="/interaction1">Interaction1</Link></li>
+  <li><Link to="/interaction2">Interaction2</Link></li>
+  <li><Link to="/interaction3">Interaction3</Link></li>
+  <li><Link to="/interaction4">Interaction4</Link></li>
+  <li><Link to="/interaction5">Interaction5</Link></li>
+  <li><Link to="/interaction6">Interaction6</Link></li>
+</ul>
+</div>
     </div>
   );
 }
