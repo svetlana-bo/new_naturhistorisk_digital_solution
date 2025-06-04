@@ -7,7 +7,6 @@ import { allInteractionAssets } from '../assets/interactionAssets';
 import styles from '../modules/DefaultPage.module.css';
 import wave from '../assets/icons/wave.svg';
 import Interaction from './Interaction';
-import BirdInteraction2 from './Bird2Test';
 import LoadingScreen from '../components/LoadingScreen'; 
 import dkIcon from '../assets/icons/dk.svg';
 import enIcon from '../assets/icons/en.svg';
@@ -51,7 +50,7 @@ export default function DefaultPage() {
   if (loading) return <LoadingScreen />;
 
   // Launch interactive bird experience after loading
-  if (hasEntered) return <BirdInteraction2 />;
+  if (hasEntered) return <Interaction />;
 
   // Render the default page with instructions and intro content
   return (
