@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { usePoseTracker } from '../hooks/usePoseTracker';
 
 import WinOverlay from './WinOverlay';
-import winVideo from '../assets/videos/Bird6.mp4'; 
+import winVideo from '../assets/videos/Bird2.mp4'; 
 
 import iconDown from '../assets/icons/Instruction2-down.svg';
 import iconUp from '../assets/icons/Instruction2-up.svg';

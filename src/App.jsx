@@ -1,8 +1,13 @@
 import './App.css'
-import { HashRouter, RouterProvider , createBrowserRouter} from 'react-router-dom';
+import { RouterProvider , createBrowserRouter} from 'react-router-dom';
 import Layout from './views/Layout.jsx';
 import DefaultPage from './views/DefaultPage';
-import Interaction from './views/Interaction.jsx';
+import Interaction1 from './views/Interaction1.jsx';
+import Interaction2 from './views/Interaction2.jsx';
+import Interaction3 from './views/Interaction3.jsx';
+import Interaction4 from './views/Interaction4.jsx';
+import Interaction5 from './views/Interaction5.jsx';
+import Interaction6 from './views/Interaction6.jsx';
 import NotFound from './views/NotFound.jsx';
 
 const router = createBrowserRouter([
@@ -16,8 +21,29 @@ const router = createBrowserRouter([
         element: <DefaultPage />,
       },
       {
-        path: "interaction",
-        element: <Interaction />,
+        path: "interaction1",
+        element: <Interaction1 />,
+      },
+      {
+        path: "interaction2",
+        element: <Interaction2 />,
+      },
+      {
+        path: "interaction3",
+        element: <Interaction3 />,
+      },
+      {
+        path: "interaction4",
+        element: <Interaction4 />,
+      },
+      {
+        path: "interaction5",
+        element: <Interaction5 />,
+      },
+
+      {
+        path: "interaction6",
+        element: <Interaction6 />,
       },
   
       {
