@@ -135,8 +135,8 @@ export default function BirdAvatar4({ onWin, onResetDone }) {
     };
 
     const LEFT_WING_SHIFT = -20;
-    const RIGHT_WING_SHIFT = 100;
-    const WING_VERTICAL_SHIFT = 10;
+    const RIGHT_WING_SHIFT = 90;
+    const WING_VERTICAL_SHIFT = 5;
 
     // Position wings
     if (leftWingEl && leftShoulder) {
@@ -247,7 +247,7 @@ if (isFoldedRef.current) {
         }} />
         <img id="leftWing" src={leftWing} alt="Left wing" style={{
           position: 'absolute',
-          width: '25%',
+          width: '20%',
           transformOrigin: '80% 20%',
           zIndex: 0,
           transition: 'transform 0.2s ease-out',
@@ -255,7 +255,7 @@ if (isFoldedRef.current) {
         <img id="rightWing" src={rightWing} alt="Right wing" style={{
           position: 'absolute',
           transformOrigin: '20% 20%',
-          width: '25%',
+          width: '20%',
           zIndex: 2,
           transition: 'transform 0.2s ease-out',
         }} />
