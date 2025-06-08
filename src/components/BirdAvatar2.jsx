@@ -47,6 +47,12 @@ export default function BirdAvatar({ onWin, onResetDone }) {
     return Math.atan2(b.y - a.y, b.x - a.x) * (180 / Math.PI);
   };
 
+  const getWingTransform = (angle, scale = 0.75) =>
+    `translate(-50%, -30%) rotate(${angle}deg) scale(${scale})`;
+
+const getIdleWingTransform = (scale = 0.75) =>
+    `translate(-50%, -30%) scale(${scale})`;
+  
   //Main animation and win logic
   useEffect(() => {
     if (!poseData || !canvasRef.current) return;
@@ -118,14 +124,14 @@ export default function BirdAvatar({ onWin, onResetDone }) {
     if (leftWingEl && leftShoulder) {
       const leftWingX = mirrorX(leftShoulder.x - 50);
       leftWingEl.style.left = `${leftWingX}px`;
-      leftWingEl.style.top = `${leftShoulder.y + verticalOffset + 120 + getWingOffset('left')}px`;
+      leftWingEl.style.top = `${leftShoulder.y + verticalOffset + 140 + getWingOffset('left')}px`;
       if (leftWrist?.score > 0.5) {
         const rawAngle = getAngle(leftShoulder, leftWrist);
         const angle = clamp(rawAngle, -90, 90);
         const smoothed = smoothAngle('left', -angle);
-        leftWingEl.style.transform = `translate(-50%, -30%) rotate(${smoothed}deg)`;
+        leftWingEl.style.transform = getWingTransform(smoothed);
       } else {
-        leftWingEl.style.transform = `translate(-50%, -30%)`;
+        leftWingEl.style.transform = getWingTransform();
       }
     }
 
@@ -133,20 +139,20 @@ export default function BirdAvatar({ onWin, onResetDone }) {
     if (rightWingEl && rightShoulder) {
       const rightWingX = mirrorX(rightShoulder.x - 30);
       rightWingEl.style.left = `${rightWingX}px`;
-      rightWingEl.style.top = `${rightShoulder.y + verticalOffset + 120 + getWingOffset('right')}px`;
+      rightWingEl.style.top = `${rightShoulder.y + verticalOffset + 140 + getWingOffset('right')}px`;
       if (rightWrist?.score > 0.5) {
         const angle = clamp(getAngle(rightShoulder, rightWrist), -90, 90);
         const smoothed = smoothAngle('right', angle);
-        rightWingEl.style.transform = `translate(-50%, -30%) rotate(${smoothed}deg)`;
+        rightWingEl.style.transform = getWingTransform(smoothed);
       } else {
-        rightWingEl.style.transform = `translate(-50%, -30%)`;
+        rightWingEl.style.transform = getIdleWingTransform();
       }
     }
 
   // Position the bird body centered between the shoulders of the user
     if (bodyImg && leftShoulder && rightShoulder) {
-      const leftWingX = mirrorX(leftShoulder.x + 50);
-      const rightWingX = mirrorX(rightShoulder.x - 110);
+      const leftWingX = mirrorX(leftShoulder.x + 80);
+      const rightWingX = mirrorX(rightShoulder.x - 150);
       const centerX = (leftWingX + rightWingX) / 2;
       const topY = centerY;
       if (bodyImg.complete) {
