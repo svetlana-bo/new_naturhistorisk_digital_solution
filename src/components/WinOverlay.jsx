@@ -1,12 +1,18 @@
-// WinOverlay - component to show the overlay when the player "wins"
-
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../modules/WinOverlay.module.css';
 import iconHeart from '../assets/icons/heart.svg';
 import flower from '../assets/images/flower.svg';
 
-// Ensure reusability by passing video source and reset callback as props
-export default function WinOverlay({ onReset, videoScr }) {
+export default function WinOverlay({ onReset, videoScr, nextView }) {
+  const [showNext, setShowNext] = useState(false);
+
+  const handleVideoEnd = () => {
+    onReset?.();        // optional chaining to avoid error if not passed
+    setShowNext(true);  // trigger rendering of new view
+  };
+
+  if (showNext && nextView) return nextView;
+
   return (
     <div className={styles.container}>
       <img src={flower} alt="Flower decoration" className={styles.flower1} />
@@ -23,7 +29,7 @@ export default function WinOverlay({ onReset, videoScr }) {
           autoPlay
           muted
           playsInline
-          onEnded={onReset} //  triggers reset when video finishes
+          onEnded={handleVideoEnd}
         />
       </div>
 

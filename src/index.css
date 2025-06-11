@@ -8,11 +8,13 @@
   --nh-pink: #AA005C;
   --nh-green: #4C5E22;
   --nh-green-light: #D7E1C2;
+  --nh-green-bright: #7F9D39;
+  --nh-green-body: #2C3714;
   --nh-black: #0A0A0A;
   --nh-white: #FEFEFE;
-  --nh-green-body: #2C3714;
   --nh-gray: #EAEAEA;
-  --nh-green-bright: #7F9D39;
+  --nh-orange: #F2C289;
+  --nh-orange-dark: #A65D07;
 }
 
 /* Importing the AU Passata font */

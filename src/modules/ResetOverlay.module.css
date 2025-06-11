@@ -1,0 +1,58 @@
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--nh-gray);
+    border: 2.5px solid var(--nh-orange-dark);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    z-index: 999;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: none;
+    font-size: 2rem;
+    color: var(--nh-orange-dark);
+    background: url('../assets/images/texture.png') no-repeat left top;
+    background-position: cover;
+    background-color: var(--nh-orange);
+    border-bottom: 2.5px solid var(--nh-orange-dark);
+  }
+
+.flower_orange1 {
+    position: absolute;
+    pointer-events: none;
+    top: -1.2em;
+    left: -1.2em;
+    width: 4.6em;
+
+  }
+.flower_orange2 {
+    position: absolute;
+    pointer-events: none;
+    top: 1.8em;
+    right: -1.6em;
+    width: 4.6em;
+  }
+
+  .icon_clock {
+    height: 1.6em; /*using em to scale relatively with font size*/
+    margin-right: 0.25rem;
+  }
+
+  .text_box {
+    font-size: 1.66rem;
+    color: var(--nh-orange-dark);
+    max-width: 35ch;
+    text-align: center;
+    padding: 2rem;
+  }
