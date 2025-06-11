@@ -11,7 +11,7 @@ import birdFemaleImage from '../assets/images/female_birds/female_bird_4.png'
 
 import styles from '../modules/Interaction.module.css';
 
-import Interaction5 from './Interaction4.jsx'; // <-- NEXT view after win
+import Interaction5 from './Interaction5.jsx'; // <-- NEXT view after win
 
 function Interaction4() {
   // Tracks if the player has "won" (i.e. attracted the female bird)
