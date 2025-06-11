@@ -11,6 +11,8 @@ import birdFemaleImage from '../assets/images/female_birds/female_bird3.png'
 
 import styles from '../modules/Interaction.module.css';
 
+import Interaction4 from './Interaction4.jsx'; // <-- NEXT view after win
+
 function Interaction3() {
   // Tracks if the player has "won" (i.e. attracted the female bird)
   const [won, setWon] = useState(false);
@@ -18,11 +20,21 @@ function Interaction3() {
    // Increments to trigger a reset animation in the female bird
   const [resetTrigger, setResetTrigger] = useState(0);
 
-   // Called when the win overlay video finishes playing
+  // NEW: Tracks whether we should move to the next interaction view
+  const [showNextView, setShowNextView] = useState(false);
+
+  // Called when the win overlay video finishes playing
   const handleResetDone = () => {
-    setWon(false);                      //  reset female attraction (to be able to start over)
-    setResetTrigger((n) => n + 1);      //  trigger female bird idle animation
+    setWon(false);                      // Reset the win state
+    setResetTrigger((n) => n + 1);      // Trigger the female bird's idle animation
+    setShowNextView(true);              // Switch to next view
   };
+
+  // --- Render logic ---
+  if (showNextView) {
+    // If the win video has ended, show the next view
+    return <Interaction4 />;
+  }
 
   return (
     <div>

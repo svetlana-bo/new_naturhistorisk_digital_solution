@@ -266,8 +266,7 @@ if (isFoldedRef.current) {
         <WinOverlay
           videoScr={winVideo}
           onReset={() => {
-            foldedCount.current = WIN_THRESHOLD;
-            setScore(WIN_THRESHOLD);
+            setScore(0);
             setWon(false);
             onResetDone?.();
           }}
