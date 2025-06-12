@@ -5,11 +5,9 @@ import { useEffect, useState } from 'react';
 import { preloadAssets } from '../utils/preloadAssets';
 import { allInteractionAssets } from '../assets/interactionAssets';
 
-import { Link } from 'react-router-dom';
-
 import styles from '../modules/DefaultPage.module.css';
 import wave from '../assets/icons/wave.svg';
-import Interaction from './Interaction6';
+import Interaction1 from './Interaction1.jsx';
 import LoadingScreen from '../components/LoadingScreen'; 
 import dkIcon from '../assets/icons/dk.svg';
 import enIcon from '../assets/icons/en.svg';
@@ -53,7 +51,7 @@ export default function DefaultPage() {
   if (loading) return <LoadingScreen />;
 
   // Launch interactive bird experience after loading
-  if (hasEntered) return <Interaction />;
+  if (hasEntered) return <Interaction1 />;
 
   // Render the default page with instructions and intro content
   return (
@@ -123,16 +121,7 @@ export default function DefaultPage() {
         </div>
       </div>
 
-      <div style={{ marginTop: '-10rem' }}>
-      <ul>
-  <li><Link to="/interaction1">Interaction1</Link></li>
-  <li><Link to="/interaction2">Interaction2</Link></li>
-  <li><Link to="/interaction3">Interaction3</Link></li>
-  <li><Link to="/interaction4">Interaction4</Link></li>
-  <li><Link to="/interaction5">Interaction5</Link></li>
-  <li><Link to="/interaction6">Interaction6</Link></li>
-</ul>
-</div>
+      
     </div>
   );
 }
